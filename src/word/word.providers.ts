@@ -16,6 +16,7 @@ export interface IWordProvider {
   fetch(word: WordToFetch): Promise<Word>;
 }
 
+// TODO: Break your specific implementation in it's own file to separate logic
 export class InMemoryWordProvider implements IWordProvider {
   private _words: Set<string> = new Set(["dog", "cat"]);
   private _wordArray = Array.from(this._words);

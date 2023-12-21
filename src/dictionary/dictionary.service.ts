@@ -33,12 +33,16 @@ export class DictionaryService {
     // TODO: How do you handle errors here ? Maybe a unit test can help you ;)
     const res = await Promise.allSettled(wordPromises);
 
+    // TODO: Type your response here and maybe rename the var with a clearer name
     res.forEach((response) => {
       if (response.status == "rejected") {
         errors.push(response.reason);
         return;
       }
 
+      // TODO: Separate in two phases your assignation
+      //  1. const word / newWord / whicheverVariableNameThatFitTheBest
+      //  2. this.addWordToDictionary(myNewlyCreatedVar)
       this._dictionary.addWord(response.value);
     });
 
