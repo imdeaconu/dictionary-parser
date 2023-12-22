@@ -1,31 +1,36 @@
+import { WordNotFoundError } from "./dictionary.errors";
+import { CreateWordDto } from "./dictionary.types";
 import { Word } from "./word";
 
 type WordToFetch = {
   name: string;
 };
 
-export class WordNotFoundError extends Error {
-  constructor(word: string) {
-    super(word);
-    this.name = "Word not found";
-  }
-}
-
 export interface IWordProvider {
   fetch(word: WordToFetch): Promise<Word>;
 }
 
 export class InMemoryWordProvider implements IWordProvider {
-  private _words: Set<string> = new Set(["dog", "cat"]);
-  private _wordArray = Array.from(this._words);
+  private _wordSet: Set<CreateWordDto> = new Set([]);
+  private _wordArray: CreateWordDto[] = new Array();
 
-  fetch(word: WordToFetch): Promise<Word> {
-    const wordIndex = this._wordArray.indexOf(word.name);
-    return new Promise((resolve, reject) =>
-      setTimeout(() => {
-        if (wordIndex === -1) reject(new WordNotFoundError(word.name));
-        resolve(new Word(this._wordArray[wordIndex], "noun", "An animal"));
-      }, 300)
+  setData(words: CreateWordDto[]): InMemoryWordProvider {
+    this._wordSet = new Set(words);
+    this._wordArray = Array.from(this._wordSet);
+    return this;
+  }
+
+  fetch(fetchedWord: WordToFetch): any {
+    const delay = 300;
+    const foundWord = this._wordArray.find(
+      (word) => word.name == fetchedWord.name
     );
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (foundWord) resolve(new Word(foundWord));
+        else reject(new WordNotFoundError(fetchedWord.name));
+      }, delay);
+    });
   }
 }
