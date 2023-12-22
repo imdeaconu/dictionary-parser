@@ -35,8 +35,9 @@ export class DictionaryService {
 
       this._dictionary.addWord(response.value);
     });
+  }
 
+  getResults(): void {
     this._dictionaryPresenter.displayDictionary(this._dictionary);
-    console.log("Errors: \n", errors);
   }
 }
