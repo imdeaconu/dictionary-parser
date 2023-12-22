@@ -8,12 +8,12 @@ export class DictionaryService {
   private _dictionaryPresenter!: IDictionaryPresenter;
   private _dictionary: Dictionary = new Dictionary();
 
-  setDictionaryPresenter(presenter: IDictionaryPresenter) {
+  setDictionaryPresenter(presenter: IDictionaryPresenter): DictionaryService {
     this._dictionaryPresenter = presenter;
     return this;
   }
 
-  setWordProvider(provider: IWordProvider) {
+  setWordProvider(provider: IWordProvider): DictionaryService {
     this._wordProvider = provider;
     return this;
   }
