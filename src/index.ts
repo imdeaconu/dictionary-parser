@@ -1,6 +1,6 @@
 import { CliDictionaryPresenter } from "./dictionary/dictionary.presenters";
 import { DictionaryService } from "./dictionary/dictionary.service";
-import { InMemoryWordProvider } from "./word/word.providers";
+import { InMemoryWordProvider } from "./dictionary/word.providers";
 
 async function main() {
   const dictionaryService = new DictionaryService();

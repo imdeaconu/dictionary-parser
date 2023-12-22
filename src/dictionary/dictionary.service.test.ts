@@ -1,6 +1,6 @@
-import { InMemoryWordProvider } from "../word/word.providers";
 import { CliDictionaryPresenter } from "./dictionary.presenters";
 import { DictionaryService } from "./dictionary.service";
+import { InMemoryWordProvider } from "./word.providers";
 
 describe("DictionaryService", () => {
   let dictionaryService: DictionaryService;

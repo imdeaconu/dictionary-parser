@@ -1,5 +1,5 @@
-import { IWordProvider, InMemoryWordProvider } from "../word/word.providers";
 import { Dictionary } from "./dictionary";
+import { IWordProvider, InMemoryWordProvider } from "./word.providers";
 
 describe("Dictionary", () => {
   let dictionary: Dictionary;
