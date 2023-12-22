@@ -1,13 +1,13 @@
-type WordType = "noun" | "adjective" | "adverb";
+import { CreateWordDto, PartOfSpeech, WordData } from "./dictionary.types";
 
 export class Word {
   name: string;
-  type: WordType;
-  definition: string;
+  type: PartOfSpeech;
+  data: WordData;
 
-  constructor(name: string, type: WordType, definition: string) {
-    this.name = name;
-    this.type = type;
-    this.definition = definition;
+  constructor(CreateWordDto: CreateWordDto) {
+    this.name = CreateWordDto.name;
+    this.type = CreateWordDto.type;
+    this.data = CreateWordDto.data;
   }
 }
