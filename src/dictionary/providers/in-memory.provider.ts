@@ -1,14 +1,7 @@
-import { WordNotFoundError } from "./dictionary.errors";
-import { CreateWordDto } from "./dictionary.types";
-import { Word } from "./word";
-
-type WordToFetch = {
-  name: string;
-};
-
-export interface IWordProvider {
-  fetch(word: WordToFetch): Promise<Word>;
-}
+import { WordNotFoundError } from "../dictionary.errors";
+import { CreateWordDto } from "../dictionary.types";
+import { Word } from "../word";
+import { IWordProvider, WordToFetch } from "./word.providers.types";
 
 export class InMemoryWordProvider implements IWordProvider {
   private _wordSet: Set<CreateWordDto> = new Set([]);

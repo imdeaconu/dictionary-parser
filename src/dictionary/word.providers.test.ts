@@ -1,7 +1,10 @@
 import { WordNotFoundError } from "./dictionary.errors";
 import { CreateWordDto } from "./dictionary.types";
+import { InMemoryWordProvider } from "./providers/in-memory.provider";
+import {
+  IWordProvider,
+} from "./providers/word.providers.types";
 import { Word } from "./word";
-import { IWordProvider, InMemoryWordProvider } from "./word.providers";
 
 describe("InMemoryProvider", () => {
   let provider: IWordProvider;

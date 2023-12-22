@@ -1,7 +1,7 @@
 import { Dictionary } from "./dictionary";
 import { IDictionaryPresenter } from "./dictionary.presenters";
+import { IWordProvider } from "./providers/word.providers.types";
 import { Word } from "./word";
-import { IWordProvider } from "./word.providers";
 
 export class DictionaryService {
   private _wordProvider!: IWordProvider;
