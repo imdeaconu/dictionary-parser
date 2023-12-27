@@ -1,14 +1,28 @@
 import { CliDictionaryPresenter } from "./dictionary/dictionary.presenters";
 import { DictionaryService } from "./dictionary/dictionary.service";
-import { InMemoryWordProvider } from "./word/word.providers";
+import { CreateWordDto } from "./dictionary/dictionary.types";
+import { InMemoryWordProvider } from "./dictionary/providers/in-memory.provider";
 
-async function main() {
+function main() {
+  const iNmemData: CreateWordDto[] = [
+    {
+      name: "Dog",
+      type: "noun",
+      data: { definition: "An animal" },
+    },
+  ];
   const dictionaryService = new DictionaryService();
   dictionaryService
-    .setWordProvider(new InMemoryWordProvider())
+    .setWordProvider(new InMemoryWordProvider().setData(iNmemData))
     .setDictionaryPresenter(new CliDictionaryPresenter());
 
-  await dictionaryService.lookup(["dog", "cat", "meerkat"]);
+  try {
+    dictionaryService
+      .lookup(["Dog", "cat", "meerkat"])
+      .then(() => dictionaryService.getResults());
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-main().then().catch();
+main();

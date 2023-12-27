@@ -1,6 +1,4 @@
-import { Word } from "../word/word";
-
-
+import { Word } from "./word";
 
 export class Dictionary {
   private _words: Array<Word> = [];
