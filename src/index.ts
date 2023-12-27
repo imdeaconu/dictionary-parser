@@ -16,9 +16,13 @@ function main() {
     .setWordProvider(new InMemoryWordProvider().setData(iNmemData))
     .setDictionaryPresenter(new CliDictionaryPresenter());
 
-  dictionaryService
-    .lookup(["Dog", "cat", "meerkat"])
-    .then(() => dictionaryService.getResults());
+  try {
+    dictionaryService
+      .lookup(["Dog", "cat", "meerkat"])
+      .then(() => dictionaryService.getResults());
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 main();

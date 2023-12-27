@@ -15,3 +15,9 @@ export type CreateWordDto = {
   type: PartOfSpeech;
   data: WordData;
 };
+
+export type LookupResult = {
+  total: number;
+  found: number;
+  missing: number;
+};
