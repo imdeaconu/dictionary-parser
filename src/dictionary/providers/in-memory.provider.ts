@@ -13,12 +13,15 @@ export class InMemoryWordProvider implements IWordProvider {
     return this;
   }
 
+  // TODO: any is really ba, try to avoid it if possible !
   fetch(fetchedWord: WordToFetch): any {
     const delay = 300;
     const foundWord = this._wordArray.find(
       (word) => word.name == fetchedWord.name
     );
 
+    // TODO: I don't think it should be your provider responsiblity to return a word
+    //    but rather the word fetched / word found
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (foundWord) resolve(new Word(foundWord));
