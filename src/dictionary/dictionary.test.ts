@@ -1,8 +1,6 @@
+import { InMemoryWordProvider } from "../infrastructure/providers/in-memory/in-memory.provider";
+import { IWordProvider } from "../infrastructure/providers/word.providers.types";
 import { Dictionary } from "./dictionary";
-import { InMemoryWordProvider } from "./providers/in-memory.provider";
-import {
-  IWordProvider,
-} from "./providers/word.providers.types";
 
 describe("Dictionary", () => {
   let dictionary: Dictionary;
