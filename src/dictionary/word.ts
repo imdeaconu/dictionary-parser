@@ -1,13 +1,15 @@
-import { CreateWordDto, PartOfSpeech, WordData } from "./dictionary.types";
+import { PartOfSpeech } from "../types/dictionary/PartOfSpeech";
+import { WordData } from "../types/dictionary/WordData";
+import { WordParams } from "../types/dictionary/WordParams";
 
 export class Word {
   name: string;
   type: PartOfSpeech;
   data: WordData;
 
-  constructor(CreateWordDto: CreateWordDto) {
-    this.name = CreateWordDto.name;
-    this.type = CreateWordDto.type;
-    this.data = CreateWordDto.data;
+  constructor(wordParams: WordParams) {
+    this.name = wordParams.name;
+    this.type = wordParams.type;
+    this.data = wordParams.data;
   }
 }
