@@ -11,9 +11,11 @@ describe("InMemoryProvider", () => {
   });
 
   it("should fetch an existing  word", async () => {
-    const word = await provider.fetch({ name: inMemoryProviderData[0].name });
+    const wordParams = await provider.fetch({
+      name: inMemoryProviderData[0].name,
+    });
     const expectedWord = inMemoryProviderData[0];
-    expect(word).toStrictEqual(expectedWord);
+    expect(wordParams).toEqual([expectedWord]);
   });
 
   it("should throw error if word doesn't exist", async () => {
