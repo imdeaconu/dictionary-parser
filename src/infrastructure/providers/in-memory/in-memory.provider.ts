@@ -14,7 +14,7 @@ export class InMemoryWordProvider implements IWordProvider {
     return this;
   }
 
-  fetch(fetchedWord: WordToFetch): Promise<WordParams> {
+  fetch(fetchedWord: WordToFetch): Promise<WordParams[]> {
     const delay = 300;
     const foundWord = this._wordArray.find(
       (word) => word.name == fetchedWord.name
@@ -24,7 +24,7 @@ export class InMemoryWordProvider implements IWordProvider {
       setTimeout(() => {
         if (foundWord) {
           this.foundWords = [...this.foundWords, foundWord];
-          resolve(foundWord);
+          resolve([foundWord]);
         } else {
           this.notFoundWords = [...this.notFoundWords, fetchedWord];
           reject(new WordNotFoundError(fetchedWord));

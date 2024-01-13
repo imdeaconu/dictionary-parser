@@ -44,9 +44,7 @@ export class DictionaryService {
   }
 
   private async _fetchWordsFromProvider(words: WordToFetch[]): Promise<void> {
-    const wordPromises = words.map((word) =>
-      this._wordProvider.fetch({ name: word.name })
-    );
+    const wordPromises = words.map((word) => this._wordProvider.fetch(word));
     await Promise.allSettled(wordPromises);
   }
 

@@ -3,9 +3,9 @@ import {
   IWordProvider,
   WordToFetch,
 } from "../infrastructure/providers/word.providers.types";
+import { WordParams } from "../types/dictionary/WordParams";
 import { CliDictionaryPresenter } from "./dictionary.presenters";
 import { DictionaryService } from "./dictionary.service";
-import { Word } from "./word";
 
 describe("DictionaryService", () => {
   let dictionaryService: DictionaryService;
@@ -28,11 +28,14 @@ describe("DictionaryService", () => {
       const fetchSpy = jest.spyOn(provider, "fetch");
       fetchSpy.mockImplementation(
         (word: WordToFetch) =>
-          new Promise((resolve) =>
-            resolve(
-              new Word({ name: "a", type: "noun", data: { definition: "wee" } })
-            )
-          )
+          new Promise((resolve) => {
+            const wordParams: WordParams = {
+              name: "a",
+              type: "noun",
+              data: { definition: "weee" },
+            };
+            resolve([wordParams]);
+          })
       );
       dictionaryService.lookup([{ name: "dog" }, { name: "cat" }]);
       expect(fetchSpy).toHaveBeenCalledTimes(2);
