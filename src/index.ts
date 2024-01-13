@@ -1,17 +1,22 @@
 import { CliDictionaryPresenter } from "./dictionary/dictionary.presenters";
 import { DictionaryService } from "./dictionary/dictionary.service";
-import { inMemoryProviderData } from "./infrastructure/providers/in-memory/in-memory.data";
-import { InMemoryWordProvider } from "./infrastructure/providers/in-memory/in-memory.provider";
+import { WiktionaryProvider } from "./infrastructure/providers/wiktionary/wiktionary.provider";
 
 function main() {
   const dictionaryService = new DictionaryService();
   dictionaryService
-    .setWordProvider(new InMemoryWordProvider().setData(inMemoryProviderData))
+    .setWordProvider(new WiktionaryProvider())
     .setDictionaryPresenter(new CliDictionaryPresenter());
 
   try {
     dictionaryService
-      .lookup([{ name: "Dog" }, { name: "cat" }, { name: "meerkat" }])
+      .lookup([
+        { name: "dog" },
+        { name: "cat" },
+        { name: "meerkat" },
+        { name: "prieten", lang: "ro" },
+        { name: "chien", lang: "fr" },
+      ])
       .then(() => dictionaryService.getResults());
   } catch (error) {
     console.error(error);
