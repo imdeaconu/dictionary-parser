@@ -1,11 +1,9 @@
-import {
-  IWordProvider,
-  WordToFetch,
-} from "../infrastructure/providers/word.providers.types";
-import { LookupResult } from "../types/dictionary/LookupResult";
-import { Dictionary } from "./dictionary";
-import { IDictionaryPresenter } from "./dictionary.presenters";
-import { Word } from "./word";
+import {IWordProvider, WordProviderFetchResults, WordToFetch,} from "../infrastructure/providers/word.providers.types";
+import {LookupResult} from "../types/dictionary/LookupResult";
+import {Dictionary} from "./dictionary";
+import {IDictionaryPresenter} from "./dictionary.presenters";
+import {Word} from "./word";
+import {WordParams} from "../types/dictionary/WordParams";
 
 export class DictionaryService {
   private _wordProvider!: IWordProvider;
@@ -24,34 +22,34 @@ export class DictionaryService {
     return this;
   }
 
-  public async lookup(wordsToSearch: WordToFetch[]): Promise<LookupResult> {
-    await this._fetchWordsFromProvider(wordsToSearch);
-    this._handleFoundWords();
-    const result: LookupResult = {
-      total: wordsToSearch.length,
-      found: this._wordProvider.foundWords.length,
-      missing: this._wordProvider.notFoundWords.length,
-    };
-
-    return result;
+  async lookupForWordsAndShowResults(wordsToFetch: any[]) {
+    this.lookup(wordsToFetch)
+      .then((lookupResults) => this.showResults(lookupResults));
   }
 
-  public getResults(): void {
+  public async lookup(wordsToFetch: WordToFetch[]): Promise<LookupResult> {
+    const providerResponse: WordProviderFetchResults = await this._wordProvider.fetchSeveralWords(wordsToFetch);
+
+    this._addFoundWordsToDictionary(providerResponse.foundWords);
+
+    return {
+      total: wordsToFetch.length,
+      found: providerResponse.foundWords,
+      missing: providerResponse.notFoundWords,
+    };
+  }
+
+  public showResults(lookupResult: LookupResult): void {
     this._dictionaryPresenter.displayDictionary(this._dictionary);
     this._dictionaryPresenter.displayNotFoundWords(
-      this._wordProvider.notFoundWords
+      lookupResult.missing
     );
   }
 
-  private async _fetchWordsFromProvider(words: WordToFetch[]): Promise<void> {
-    const wordPromises = words.map((word) => this._wordProvider.fetch(word));
-    await Promise.allSettled(wordPromises);
-  }
+  private _addFoundWordsToDictionary(foundWords: WordParams[]) {
+    const words: Word[] = foundWords
+      .map((wordParam) => new Word(wordParam));
 
-  private _handleFoundWords() {
-    this._wordProvider.foundWords.forEach((crtWordParams) => {
-      const word = new Word(crtWordParams);
-      this._dictionary.addWord(word);
-    });
+    this._dictionary.addSeveralWords(words);
   }
 }

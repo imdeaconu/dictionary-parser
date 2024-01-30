@@ -5,8 +5,16 @@ export type WordToFetch = {
   lang?: string;
 };
 
-export interface IWordProvider {
+export type WordProviderFetchResult = {
+  foundWord: WordParams[];
+};
+
+export type WordProviderFetchResults = {
   foundWords: WordParams[];
   notFoundWords: WordToFetch[];
-  fetch(word: WordToFetch): Promise<WordParams[]>;
+};
+
+export interface IWordProvider {
+  fetch(word: WordToFetch): Promise<WordProviderFetchResult>;
+  fetchSeveralWords(words: WordToFetch[]): Promise<WordProviderFetchResults>
 }

@@ -1,5 +1,8 @@
+import {WordParams} from "./WordParams";
+import {WordToFetch} from "../../infrastructure/providers/word.providers.types";
+
 export type LookupResult = {
   total: number;
-  found: number;
-  missing: number;
+  found: WordParams[];
+  missing: WordToFetch[];
 };
