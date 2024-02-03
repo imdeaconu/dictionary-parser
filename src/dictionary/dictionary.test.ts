@@ -2,6 +2,8 @@ import { InMemoryWordProvider } from "../infrastructure/providers/in-memory/in-m
 import { IWordProvider } from "../infrastructure/providers/word.providers.types";
 import { Dictionary } from "./dictionary";
 
+// TODO Fix tests
+
 describe("Dictionary", () => {
   let dictionary: Dictionary;
   let provider: IWordProvider;

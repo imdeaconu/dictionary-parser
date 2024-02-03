@@ -42,8 +42,26 @@ export class InMemoryWordProvider implements IWordProvider {
     });
   }
 
-  fetchSeveralWords(words: WordToFetch[]): Promise<WordProviderFetchResults> {
-    const wordParams: WordParams[] = [];
-    return Promise.resolve({ foundWords: wordParams, notFoundWords: words });
+  async fetchSeveralWords(
+    words: WordToFetch[],
+  ): Promise<WordProviderFetchResults> {
+    let foundWords: WordParams[] = [];
+    let notFoundWords: WordToFetch[] = [];
+
+    for (const wordToFetch of words) {
+      try {
+        const result: WordProviderFetchResult = await this.fetch(wordToFetch);
+
+        foundWords = foundWords.concat(result.foundWord);
+      } catch (e: any) {
+        if (!!e.word) notFoundWords.push(e.word);
+        else throw new Error("Unknown error occurred");
+      }
+    }
+
+    return {
+      foundWords,
+      notFoundWords,
+    };
   }
 }

@@ -7,6 +7,8 @@ import { WordParams } from "../types/dictionary/WordParams";
 import { CliDictionaryPresenter } from "./dictionary.presenters";
 import { DictionaryService } from "./dictionary.service";
 
+// TODO Fix tests
+
 describe("DictionaryService", () => {
   let dictionaryService: DictionaryService;
   let provider: IWordProvider;
@@ -34,8 +36,8 @@ describe("DictionaryService", () => {
               type: "noun",
               data: { definition: "weee" },
             };
-            resolve([wordParams]);
-          })
+            resolve({ foundWord: [wordParams] });
+          }),
       );
       dictionaryService.lookup([{ name: "dog" }, { name: "cat" }]);
       expect(fetchSpy).toHaveBeenCalledTimes(2);

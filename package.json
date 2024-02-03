@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/index.js"
+    "build": "rimraf ./build && tsc && tsc-alias",
+    "start-wiktionary": "npm run build && node build/examples/wiktionary.example.js",
+    "start-in-memory": "npm run build && node build/examples/in-memory.example.js"
   },
   "jest": {
     "preset": "ts-jest",
@@ -21,6 +22,7 @@
     "jest": "^29.7.0",
     "rimraf": "^5.0.5",
     "ts-jest": "^29.1.1",
+    "tsc-alias": "^1.8.8",
     "typescript": "^5.3.3"
   }
 }
