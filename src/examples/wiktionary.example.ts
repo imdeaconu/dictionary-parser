@@ -1,6 +1,6 @@
-import { CliDictionaryPresenter } from "./dictionary/dictionary.presenters";
-import { DictionaryService } from "./dictionary/dictionary.service";
-import { WiktionaryProvider } from "./infrastructure/providers/wiktionary/wiktionary.provider";
+import { CliDictionaryPresenter } from "@/dictionary/dictionary.presenters";
+import { DictionaryService } from "@/dictionary/dictionary.service";
+import { WiktionaryProvider } from "@/infrastructure/providers";
 
 async function main() {
   const dictionaryService = new DictionaryService();

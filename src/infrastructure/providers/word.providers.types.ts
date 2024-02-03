@@ -16,5 +16,6 @@ export type WordProviderFetchResults = {
 
 export interface IWordProvider {
   fetch(word: WordToFetch): Promise<WordProviderFetchResult>;
-  fetchSeveralWords(words: WordToFetch[]): Promise<WordProviderFetchResults>
+
+  fetchSeveralWords(words: WordToFetch[]): Promise<WordProviderFetchResults>;
 }

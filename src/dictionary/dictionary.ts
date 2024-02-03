@@ -12,6 +12,6 @@ export class Dictionary {
   }
 
   addSeveralWords(words: Word[]) {
-    this._words.concat(words);
+    this._words = this._words.concat(words);
   }
 }
