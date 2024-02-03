@@ -1,31 +1,56 @@
 import { WordNotFoundError } from "../../../dictionary/dictionary.errors";
 import { WordParams } from "../../../types/dictionary/WordParams";
-import { IWordProvider, WordToFetch } from "../word.providers.types";
+import {IWordProvider, WordProviderFetchResult, WordProviderFetchResults, WordToFetch} from "../word.providers.types";
 import {
   WiktionaryLanguage,
   WiktionaryResponse,
 } from "./wiktionary.provider.types";
+import {text} from "stream/consumers";
 
 export class WiktionaryProvider implements IWordProvider {
-  foundWords: WordParams[] = [];
-  notFoundWords: WordToFetch[] = [];
   private _defaultLanguage: WiktionaryLanguage = "en";
+  private readonly WIKTIONARY_URL = "https://en.wiktionary.org/api/rest_v1/page/definition/";
 
-  public async fetch(wordToFetch: WordToFetch): Promise<WordParams[]> {
+  async fetchSeveralWords(words: WordToFetch[]): Promise<WordProviderFetchResults> {
+    const foundWords: WordParams[] = [];
+    const notFoundWords: WordToFetch[] = [];
+
+    for (const wordToFetch of words) {
+      try {
+        const result : WordProviderFetchResult = await this.fetch(wordToFetch);
+
+        foundWords.concat(result.foundWord);
+      } catch (e: any) {
+        if (!!e.word)
+          notFoundWords.push(e.word);
+        else
+          throw new Error("Unknown error occurred");
+      }
+    }
+
+    return {
+      foundWords,
+      notFoundWords,
+    }
+  }
+
+  public async fetch(wordToFetch: WordToFetch): Promise<WordProviderFetchResult> {
     try {
       const wiktionaryResponse: Response = await fetch(
-        `https://en.wiktionary.org/api/rest_v1/page/definition/${wordToFetch.name}`
+        `${this.WIKTIONARY_URL}${wordToFetch.name}`
       );
       const wiktionaryData =
         (await wiktionaryResponse.json()) as WiktionaryResponse;
-      const foundWordParams = this._transformWiktionaryDataIntoWordParams(
+
+      const foundWord = this._transformWiktionaryDataIntoWordParams(
         wiktionaryData,
         wordToFetch
       );
-      this.foundWords = [...this.foundWords, ...foundWordParams];
-      return foundWordParams;
+
+      return {
+        foundWord,
+      };
     } catch (error) {
-      this.notFoundWords = [...this.notFoundWords, wordToFetch];
       throw new WordNotFoundError(wordToFetch);
     }
   }

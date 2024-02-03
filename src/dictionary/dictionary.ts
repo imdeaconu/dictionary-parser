@@ -10,4 +10,8 @@ export class Dictionary {
   addWord(word: Word) {
     this._words.push(word);
   }
+
+  addSeveralWords(words: Word[]) {
+    this._words.concat(words);
+  }
 }
