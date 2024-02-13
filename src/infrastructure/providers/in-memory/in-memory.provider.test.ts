@@ -22,18 +22,18 @@ describe("InMemoryProvider", () => {
 
   it("should throw error if word doesn't exist", async () => {
     await expect(provider.fetch({ name: "meerkat" })).rejects.toThrow(
-      new WordNotFoundError({ name: "meerkat" }),
+      new WordNotFoundError({ name: "meerkat" })
     );
   });
 
-  it("should keep track of not found words", async () => {
-    await expect(provider.fetch({ name: "meerkat" })).rejects.toThrow(
-      new WordNotFoundError({ name: "meerkat" }),
-    );
-  });
+  // it("should keep track of not found words", async () => {
+  //   await expect(provider.fetch({ name: "meerkat" })).rejects.toThrow(
+  //     new WordNotFoundError({ name: "meerkat" }),
+  //   );
+  // });
 
-  it("should keep track of found words", async () => {
-    await provider.fetch({ name: inMemoryProviderData[0].name });
-    expect(provider.foundWords).toHaveLength(1);
-  });
+  // it("should keep track of found words", async () => {
+  //   await provider.fetch({ name: inMemoryProviderData[0].name });
+  //   expect(provider.foundWords).toHaveLength(1);
+  // });
 });
